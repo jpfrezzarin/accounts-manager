@@ -14,7 +14,7 @@ public class Account : Entity, IAggregation
     }
     
     public string Name { get; set; }
-    public decimal Balance => _transactions.Sum(t => t.Income ? t.Amount : t.Amount * 1);
+    public decimal Balance => _transactions.Sum(t => t.Income ? t.Amount : t.Amount * -1);
     public IReadOnlyCollection<Transaction> Transactions => _transactions;
 
     public Guid AddTransaction(decimal amount, string description, bool income)
