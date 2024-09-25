@@ -1,4 +1,5 @@
 using AccountsManager.Api.Commons;
+using AccountsManager.Api.Middlewares;
 using AccountsManager.Application.Common;
 using AccountsManager.Infrastructure.Common;
 using Newtonsoft.Json;
@@ -28,6 +29,8 @@ builder.Services.AddRouting(options => options.LowercaseUrls = true);
 builder.Services.AddApplicationLayer();
 builder.Services.AddInfrastructureLayer();
 
+builder.Services.AddHandlingExceptions();
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -36,6 +39,8 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+
+app.UseHandlingExceptions();
 
 app.UseHttpsRedirection();
 
