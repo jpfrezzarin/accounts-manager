@@ -12,8 +12,7 @@ public class AccountController(
     ICreateAccountUseCase createAccountUseCase, 
     IUpdateAccountUseCase updateAccountUseCase,
     ICreateTransactionUseCase createTransactionUseCase,
-    IDeleteTransactionUseCase deleteTransactionUseCase,
-    ILogger<AccountController> logger) 
+    IDeleteTransactionUseCase deleteTransactionUseCase) 
     : ControllerBase
 {
     [HttpGet]
@@ -26,33 +25,33 @@ public class AccountController(
     public async Task<ActionResult<Guid>> Create(string name, decimal balance)
     {
         var id = await createAccountUseCase.Create(name, balance);
-        return Created(nameof(GetById), id);
+        return Created(nameof(GetById), new { id });
     }
     
-    [HttpGet("{id:guid}")]
-    public async Task<ActionResult<AccountViewModel>> GetById(Guid id)
+    [HttpGet("{accountId:guid}")]
+    public async Task<ActionResult<AccountViewModel>> GetById(Guid accountId)
     {
-        return Ok(await getAccountByIdUseCase.GetById(id));
+        return Ok(await getAccountByIdUseCase.GetById(accountId));
     }
     
-    [HttpPut("{id:guid}")]
-    public async Task<ActionResult> Update(Guid id, string name)
+    [HttpPut("{accountId:guid}")]
+    public async Task<ActionResult> Update(Guid accountId, string name)
     {
-        await updateAccountUseCase.Update(id, name);
+        await updateAccountUseCase.Update(accountId, name);
         return NoContent();
     }
     
-    [HttpPost("{id:guid}/transactions")]
-    public async Task<ActionResult<Guid>> Create(Guid id, decimal amount, string description, bool income)
+    [HttpPost("{accountId:guid}/transactions")]
+    public async Task<ActionResult<Guid>> Create(Guid accountId, decimal amount, string description, bool income)
     {
-        var transactionId = await createTransactionUseCase.Create(id, amount, description, income);
-        return Created(string.Empty, transactionId);
+        var transactionId = await createTransactionUseCase.Create(accountId, amount, description, income);
+        return Created(string.Empty, new { id = transactionId });
     }
     
-    [HttpDelete("{id:guid}/transactions/{transactionId:guid}")]
-    public async Task<ActionResult> Delete(Guid id, Guid transactionId)
+    [HttpDelete("{accountId:guid}/transactions/{transactionId:guid}")]
+    public async Task<ActionResult> Delete(Guid accountId, Guid transactionId)
     {
-        await deleteTransactionUseCase.Delete(id, transactionId);
+        await deleteTransactionUseCase.Delete(accountId, transactionId);
         return NoContent();
     }
 }

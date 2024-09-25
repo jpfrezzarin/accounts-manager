@@ -9,11 +9,12 @@ public class Repository<TEntity, TEntityDao>(AccountsManagerContext context, IMa
     where TEntity : Entity, IAggregation
     where TEntityDao : EntityDao
 {
+    protected readonly IMapper Mapper = mapper;
     protected DbSet<TEntityDao> Database => context.Set<TEntityDao>();
     
     public virtual async Task Add(TEntity entity, CancellationToken cancellationToken = default)
     {
-        var entityDao = mapper.Map<TEntityDao>(entity);
+        var entityDao = Mapper.Map<TEntityDao>(entity);
         await Database.AddAsync(entityDao, cancellationToken);
         await context.SaveChangesAsync(cancellationToken);
     }
@@ -21,35 +22,17 @@ public class Repository<TEntity, TEntityDao>(AccountsManagerContext context, IMa
     public virtual async Task Update(TEntity entity, CancellationToken cancellationToken = default)
     {
         var entityDao = await Database.FindAsync([ entity.Id ], cancellationToken: cancellationToken);
-        mapper.Map(entity, entityDao);
+        Mapper.Map(entity, entityDao);
         Database.Update(entityDao!);
         context.Entry(entityDao!).State = EntityState.Modified;
-        //UpdateChildrenEntities(entityDao!);
         await context.SaveChangesAsync(cancellationToken);
     }
     
     public virtual async Task Delete(TEntity entity, CancellationToken cancellationToken = default)
     {
         var entityDao = await Database.FindAsync([ entity.Id ], cancellationToken: cancellationToken);
-        mapper.Map(entity, entityDao);
+        Mapper.Map(entity, entityDao);
         Database.Remove(entityDao!);
         await context.SaveChangesAsync(cancellationToken);
-    }
-
-    private void UpdateChildrenEntities(TEntityDao entity)
-    {
-        var childrenEntities = entity.GetType()
-            .GetProperties(BindingFlags.Public | BindingFlags.Instance)
-            .Where(p => 
-                p.PropertyType.IsGenericType &&
-                p.PropertyType.GetGenericTypeDefinition() == (typeof(ICollection<>)) && 
-                p.PropertyType.GenericTypeArguments.Single().IsAssignableTo(typeof(EntityDao)));
-
-        foreach (var child in childrenEntities)
-        {
-            var childValue = child.GetValue(entity);
-            
-            
-        }
     }
 }

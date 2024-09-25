@@ -21,7 +21,7 @@ public class AccountRepository(AccountContext context, IMapper mapper) :
                 Id = a.Id,
                 Name = a.Name,
                 Balance = (decimal)a.Transactions.Sum(t => t.Income ? (double)t.Amount : (double)(t.Amount * -1)),
-                Transactions = a.Transactions.Select(t => new TransactionViewModel
+                Transactions = a.Transactions.OrderByDescending(t => t.Date).Select(t => new TransactionViewModel
                 {
                     Id = t.Id,
                     Amount = t.Amount,
@@ -52,14 +52,14 @@ public class AccountRepository(AccountContext context, IMapper mapper) :
     {
         var dao = await Database.Include(x => x.Transactions)
             .FirstOrDefaultAsync(a => a.Id.Equals(id), cancellationToken);
-        return mapper.Map<Account>(dao);
+        return Mapper.Map<Account>(dao);
     }
 
     public override async Task Update(Account entity, CancellationToken cancellationToken = default)
     {
         var entityDao = await Database.FindAsync([ entity.Id ], cancellationToken: cancellationToken);
         var transactionsSnapshot = entityDao!.Transactions.ToList();
-        mapper.Map(entity, entityDao);
+        Mapper.Map(entity, entityDao);
         Database.Update(entityDao!);
         context.Entry(entityDao!).State = EntityState.Modified;
         foreach (var transactionDao in entityDao!.Transactions.Where(t => !transactionsSnapshot.Any(tt => t.Id.Equals(tt.Id))))

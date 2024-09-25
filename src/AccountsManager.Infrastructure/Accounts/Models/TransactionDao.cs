@@ -7,10 +7,10 @@ public class TransactionDao : EntityDao
 {
     public Guid AccountId { get; set; }
     public decimal Amount { get; set; }
-    public string Description { get; set; }
+    public string Description { get; set; } = null!;
     public DateTime Date { get; set; }
     public bool Income { get; set; }
-    
-    [ForeignKey(nameof(AccountId))]
-    public virtual AccountDao Account { get; set; }
+
+    [ForeignKey(nameof(AccountId))] 
+    public virtual AccountDao Account { get; set; } = null!;
 }
