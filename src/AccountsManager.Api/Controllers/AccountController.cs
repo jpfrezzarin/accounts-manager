@@ -1,12 +1,11 @@
 using AccountsManager.Application.Accounts.ViewModels;
-using AccountsManager.Domain.Accounts;
 using AccountsManager.Domain.Accounts.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AccountsManager.Api.Controllers;
 
 [ApiController]
-[Route("[controller]")]
+[Route("[controller]s")]
 public class AccountController(
     IGetAccountByIdUseCase<AccountViewModel> getAccountByIdUseCase,
     IGetAllAccountsUseCase<AccountOnlyViewModel> getAllAccountsUseCase, 
