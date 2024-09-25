@@ -17,38 +17,42 @@ public class AccountController(
     : ControllerBase
 {
     [HttpGet]
-    public async Task<IEnumerable<AccountOnlyViewModel>> GetAll()
+    public async Task<ActionResult<IEnumerable<AccountOnlyViewModel>>> GetAll()
     {
-        return await getAllAccountsUseCase.GetAll();
+        return Ok(await getAllAccountsUseCase.GetAll());
     }
     
     [HttpPost]
-    public async Task<Guid> Create(string name, decimal balance)
+    public async Task<ActionResult<Guid>> Create(string name, decimal balance)
     {
-        return await createAccountUseCase.Create(name, balance);
+        var id = await createAccountUseCase.Create(name, balance);
+        return Created(nameof(GetById), id);
     }
     
     [HttpGet("{id:guid}")]
-    public async Task<AccountViewModel> GetById(Guid id)
+    public async Task<ActionResult<AccountViewModel>> GetById(Guid id)
     {
-        return await getAccountByIdUseCase.GetById(id);
+        return Ok(await getAccountByIdUseCase.GetById(id));
     }
     
     [HttpPut("{id:guid}")]
-    public async Task Update(Guid id, string name)
+    public async Task<ActionResult> Update(Guid id, string name)
     {
         await updateAccountUseCase.Update(id, name);
+        return NoContent();
     }
     
     [HttpPost("{id:guid}/transactions")]
-    public async Task<Guid> Create(Guid id, decimal amount, string description, bool income)
+    public async Task<ActionResult<Guid>> Create(Guid id, decimal amount, string description, bool income)
     {
-        return await createTransactionUseCase.Create(id, amount, description, income);
+        var transactionId = await createTransactionUseCase.Create(id, amount, description, income);
+        return Created(string.Empty, transactionId);
     }
     
     [HttpDelete("{id:guid}/transactions/{transactionId:guid}")]
-    public async Task Delete(Guid id, Guid transactionId)
+    public async Task<ActionResult> Delete(Guid id, Guid transactionId)
     {
         await deleteTransactionUseCase.Delete(id, transactionId);
+        return NoContent();
     }
 }
