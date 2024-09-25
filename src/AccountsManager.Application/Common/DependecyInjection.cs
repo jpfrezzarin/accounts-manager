@@ -12,6 +12,7 @@ public static class DependecyInjection
         services.AddScoped<IGetAccountByIdUseCase<AccountViewModel>, GetAccountByIdUseCase>();
         services.AddScoped<IGetAllAccountsUseCase<AccountOnlyViewModel>, GetAllAccountsUseCase>();
         services.AddScoped<ICreateAccountUseCase, CreateAccountUseCase>();
+        services.AddScoped<IUpdateAccountUseCase, UpdateAccountUseCase>();
         services.AddScoped<ICreateTransactionUseCase, CreateTransactionUseCase>();
         services.AddScoped<IDeleteTransactionUseCase, DeleteTransactionUseCase>();
         

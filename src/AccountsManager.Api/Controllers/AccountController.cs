@@ -10,6 +10,7 @@ public class AccountController(
     IGetAccountByIdUseCase<AccountViewModel> getAccountByIdUseCase,
     IGetAllAccountsUseCase<AccountOnlyViewModel> getAllAccountsUseCase, 
     ICreateAccountUseCase createAccountUseCase, 
+    IUpdateAccountUseCase updateAccountUseCase,
     ICreateTransactionUseCase createTransactionUseCase,
     IDeleteTransactionUseCase deleteTransactionUseCase,
     ILogger<AccountController> logger) 
@@ -31,6 +32,12 @@ public class AccountController(
     public async Task<AccountViewModel> GetById(Guid id)
     {
         return await getAccountByIdUseCase.GetById(id);
+    }
+    
+    [HttpPut("{id:guid}")]
+    public async Task Update(Guid id, string name)
+    {
+        await updateAccountUseCase.Update(id, name);
     }
     
     [HttpPost("{id:guid}/transactions")]

@@ -13,7 +13,7 @@ public class Account : Entity, IAggregation
         AddTransaction(balance, $"Hello, {name}", true);
     }
     
-    public string Name { get; protected set; }
+    public string Name { get; set; }
     public decimal Balance => _transactions.Sum(t => t.Income ? t.Amount : t.Amount * 1);
     public IReadOnlyCollection<Transaction> Transactions => _transactions;
 
