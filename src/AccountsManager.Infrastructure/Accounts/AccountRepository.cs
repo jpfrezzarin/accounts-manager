@@ -20,7 +20,7 @@ public class AccountRepository(AccountContext context, IMapper mapper) :
             {
                 Id = a.Id,
                 Name = a.Name,
-                Balance = (decimal)a.Transactions.Sum(t => t.Income ? (double)t.Amount : (double)(t.Amount * -1)),
+                Balance = (decimal)a.Transactions.Sum(t => t.Income ? (double)t.Amount : (double)(-t.Amount)),
                 Transactions = a.Transactions.OrderByDescending(t => t.Date).Select(t => new TransactionViewModel
                 {
                     Id = t.Id,
@@ -42,7 +42,7 @@ public class AccountRepository(AccountContext context, IMapper mapper) :
             {
                 Id = a.Id,
                 Name = a.Name,
-                Balance = (decimal)a.Transactions.Sum(t => t.Income ? (double)t.Amount : (double)(t.Amount * -1))
+                Balance = (decimal)a.Transactions.Sum(t => t.Income ? (double)t.Amount : (double)(-t.Amount))
             })
             .ToListAsync(cancellationToken);
         return views;
