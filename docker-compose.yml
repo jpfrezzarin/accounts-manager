@@ -1,0 +1,16 @@
+services: 
+  accounts-manager:
+    container_name: accounts-manager
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+    image: accounts-manager:latest
+    volumes:
+      - ./database.db:/app/data/database.db
+    environment:
+      TZ: America/Sao_Paulo
+      ASPNETCORE_ENVIRONMENT: Production
+      ASPNETCORE_HTTP_PORTS: 80
+      ConnectionStrings__AccountsManager: Data Source=/app/data/database.db
+    ports:
+      - "8080:80"
