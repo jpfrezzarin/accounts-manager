@@ -17,6 +17,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AccountsManager.Domain.Test
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AccountsManager.Api", "src\AccountsManager.Api\AccountsManager.Api.csproj", "{57896950-6D3D-4074-B289-1D25AB7BF202}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AccountsManager.Infrastructure.Tests", "tests\AccountsManager.Infrastructure.Tests\AccountsManager.Infrastructure.Tests.csproj", "{C42A5E25-B1C8-4FF9-9E76-47529327F82B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -31,6 +33,7 @@ Global
 		{4B806A73-7940-4822-A123-6D8D6491E24B} = {504B8E9A-75B2-46B9-A4DA-B871CBA74F1F}
 		{411FAE28-2FEB-48FD-955E-EB6D643D3410} = {360992C4-7898-4B89-AC88-0333D4D806D4}
 		{57896950-6D3D-4074-B289-1D25AB7BF202} = {504B8E9A-75B2-46B9-A4DA-B871CBA74F1F}
+		{C42A5E25-B1C8-4FF9-9E76-47529327F82B} = {360992C4-7898-4B89-AC88-0333D4D806D4}
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{1286D8E6-EFD0-4FFB-B0D3-DDAD2923010A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
@@ -53,5 +56,9 @@ Global
 		{57896950-6D3D-4074-B289-1D25AB7BF202}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{57896950-6D3D-4074-B289-1D25AB7BF202}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{57896950-6D3D-4074-B289-1D25AB7BF202}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C42A5E25-B1C8-4FF9-9E76-47529327F82B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C42A5E25-B1C8-4FF9-9E76-47529327F82B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C42A5E25-B1C8-4FF9-9E76-47529327F82B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C42A5E25-B1C8-4FF9-9E76-47529327F82B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

@@ -1,4 +1,5 @@
 using AccountsManager.Domain.Accounts;
+using AccountsManager.Domain.Accounts.Exceptions;
 
 namespace AccountsManager.Domain.Tests.Accounts;
 
@@ -36,5 +37,11 @@ public class AccountTest
         account.AddTransaction(2, "t3", false);
         
         Assert.Equal(-5, account.Balance);
+    }
+    
+    [Fact]
+    public void AccountTest_NegativeBalance_ShouldThrowsException()
+    {
+        Assert.Throws<NegativeAmountException>(() => new Account("Tests", -10));
     }
 }
