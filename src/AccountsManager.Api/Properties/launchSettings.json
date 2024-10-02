@@ -9,7 +9,7 @@
       "applicationUrl": "http://localhost:8080",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development",
-        "ConnectionStrings__AccountsManager": "Data Source=$(MSBuildProjectDirectory)/../../database.db"
+        "ConnectionStrings__AccountsManager": "Data Source=$(MSBuildProjectDirectory)/../../../database.db"
       }
     }
   }
