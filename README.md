@@ -13,7 +13,7 @@ A domestic accounts manager sample.
 To create the database, run the command bellow in repository directory:
 
 ```
-sqllite3 database.db
+sqlite3 database.db
 ```
 
 After entering in the sqlite application, read the initial script in `script.sql` file, running the command:
